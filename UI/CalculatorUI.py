@@ -2,14 +2,14 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 WIDTH = (75 + 2 * 2) * 4 + 3  # 窗口宽度
 HEIGHT = (50 + 2 * 2) * 5 + 3 + 70  # 窗口高度
-# 按钮样式
+# 按钮样式(颜色、字体、大小)
 button_style = "QPushButton{" \
-               "background-color:rgb(0,0,0);" \
+               "background-color:rgb(255,255,255);" \
                "border:1px solid rgb(216,216,216);" \
-               "color:rgb(255,255,255);" \
+               "color:rgb(0,0,0);" \
                "width:75px;" \
                "height:50px;" \
-               "font:bold 16pt \"Arial\";" \
+               "font:bold 12pt \"Times New Roman\";" \
                "}" \
                "QPushButton:hover{" \
                "background-color:rgba(0,0,0,0);" \
@@ -64,7 +64,7 @@ class UiMainWindow(object):
         self.gridLayoutWidget = QtWidgets.QWidget(self.centralwidget)
         self.gridLayoutWidget.setGeometry(QtCore.QRect(0, 0, WIDTH, HEIGHT))
         self.gridLayoutWidget.setObjectName("gridLayoutWidget")
-        self.gridLayoutWidget.setStyleSheet("background-color:rgb(31,31,31);")
+        self.gridLayoutWidget.setStyleSheet("background-color:rgb(255,255,255);")
         self.gridLayout = QtWidgets.QGridLayout(self.gridLayoutWidget)
         self.gridLayout.setContentsMargins(0, 0, 0, 0)
         self.gridLayout.setObjectName("gridLayout")
@@ -75,34 +75,42 @@ class UiMainWindow(object):
         self.display_box.setFixedHeight(70)
         self.display_box.setText("0")  # 设置显示框默认显示内容
         self.display_box.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignBottom)
-        self.display_box.setStyleSheet("color: rgb(255,255,255);"
-                                       "font: 300 24pt \"Arial\";"
+        self.display_box.setStyleSheet("color: rgb(0,0,0);"
+                                       "font: 300 24pt \"Times New Roman\";"
                                        )
         self.display_box.setContentsMargins(0, 0, 5, 3)
         self.gridLayout.addWidget(self.display_box, 0, 0, 1, 4)
         # 输入模式显示框
         self.mode_display_box = QtWidgets.QLabel(self.gridLayoutWidget)
         self.mode_display_box.setObjectName("mode_display_box")
-        self.mode_display_box.setFixedHeight(70)
         self.mode_display_box.setText("Angle")  # 设置显示框默认显示内容
         self.mode_display_box.setAlignment(QtCore.Qt.AlignCenter)
-        self.mode_display_box.setStyleSheet("color: rgb(245,222,179);"
-                                            "font: 300 18pt \"Arial\";"
+        self.mode_display_box.setStyleSheet("color: rgb(0,0,0);"
+                                            "font: 300 12pt \"Times New Roman\";"
+                                            'border-width: 1px;border-style: solid;border-color: rgb(219, 219, 219);'
                                             )
-        self.gridLayout.addWidget(self.mode_display_box, 1, 0, 1, 1)
+
+        self.mode_display_box.setFrameShape(QtWidgets.QFrame.Box)
+        self.mode_display_box.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.mode_display_box.setFrameShape(QtWidgets.QFrame.Box)
+        self.mode_display_box.setAlignment(QtCore.Qt.AlignVCenter)
+        self.mode_display_box.setAlignment(QtCore.Qt.AlignCenter)
+        self.gridLayout.addWidget(self.mode_display_box, 2, 3, 1, 1)
+
+
         # 三角函数按钮
         self.sin_button = TrigonometricButton(self.gridLayoutWidget)
         self.sin_button.setObjectName("sin_button")
-        self.gridLayout.addWidget(self.sin_button, 2, 3, 1, 1)
+        self.gridLayout.addWidget(self.sin_button, 1, 0, 1, 1)
         self.cos_button = TrigonometricButton(self.gridLayoutWidget)
         self.cos_button.setObjectName("cos_button")
-        self.gridLayout.addWidget(self.cos_button, 3, 3, 1, 1)
-        self.arctan_button = TrigonometricButton(self.gridLayoutWidget)
-        self.arctan_button.setObjectName("arctan_button")
-        self.gridLayout.addWidget(self.arctan_button, 4, 3, 1, 1)
+        self.gridLayout.addWidget(self.cos_button, 1, 1, 1, 1)
         self.arcsin_button = TrigonometricButton(self.gridLayoutWidget)
         self.arcsin_button.setObjectName("arcsin_button")
-        self.gridLayout.addWidget(self.arcsin_button, 5, 3, 1, 1)
+        self.gridLayout.addWidget(self.arcsin_button, 1, 2, 1, 1)
+        self.arctan_button = TrigonometricButton(self.gridLayoutWidget)
+        self.arctan_button.setObjectName("arctan_button")
+        self.gridLayout.addWidget(self.arctan_button, 1, 3, 1, 1)
         # 数字按钮0-9
         self.number_0_button = NumberButton(self.gridLayoutWidget)
         self.number_0_button.setObjectName("number_0_button")
@@ -141,19 +149,20 @@ class UiMainWindow(object):
         # 复位按钮
         self.reset_button = FunctionButton(self.gridLayoutWidget)
         self.reset_button.setObjectName("reset_button")
-        self.gridLayout.addWidget(self.reset_button, 1, 2, 1, 1)
+        self.gridLayout.addWidget(self.reset_button, 4, 3, 1, 1)
         # 清除按钮
         self.del_button = FunctionButton(self.gridLayoutWidget)
         self.del_button.setObjectName("del_button")
-        self.gridLayout.addWidget(self.del_button, 1, 3, 1, 1)
+        self.gridLayout.addWidget(self.del_button, 5, 3, 1, 1)
         # +/-按钮
         self.sign_button = FunctionButton(self.gridLayoutWidget)
         self.sign_button.setObjectName("sign_button")
         self.gridLayout.addWidget(self.sign_button, 5, 0, 1, 1)
+        MainWindow.setCentralWidget(self.centralwidget)
         # 模式选择按钮
         self.mode_button = FunctionButton(self.gridLayoutWidget)
         self.mode_button.setObjectName("mode_button")
-        self.gridLayout.addWidget(self.mode_button, 1, 1, 1, 1)
+        self.gridLayout.addWidget(self.mode_button, 3, 3, 1, 1)
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
@@ -178,6 +187,6 @@ class UiMainWindow(object):
         self.number_1_button.setText(_translate("MainWindow", "1"))
         self.number_3_button.setText(_translate("MainWindow", "3"))
         self.number_4_button.setText(_translate("MainWindow", "4"))
-        self.del_button.setText(_translate("MainWindow", "←"))
+        self.del_button.setText(_translate("MainWindow", "del"))
         self.sign_button.setText(_translate("MainWindow", "+/-"))
         self.mode_button.setText(_translate("MainWindow", "mode"))
